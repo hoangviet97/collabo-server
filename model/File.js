@@ -29,7 +29,7 @@ module.exports = {
     let newFile = null;
 
     const params = {
-      Bucket: "collabo-files",
+      Bucket: "collabo-bucket",
       Key: `${fileId}`,
       Body: file.buffer,
       ContentType: file.mimetype
@@ -41,7 +41,11 @@ module.exports = {
     if (parseInt(rows[0].total) + parseInt(file.size) > 20971520) {
       throw new Error("Out of space!");
     } else {
-      s3.upload(params, async (err, data) => {});
+      s3.upload(params, async (err, data) => {
+        if (err) {
+          console.log(err);
+        }
+      });
       const clearedType = file.originalname.split(".");
       newFile = new File(fileId, id, file.originalname, "", file.size, clearedType[clearedType.length - 1]);
 
@@ -110,7 +114,7 @@ module.exports = {
 
     let x = await s3
       .getObject({
-        Bucket: "collabo-files",
+        Bucket: "collabo-bucket",
         Key: "6ab5iz.jpg"
       })
       .createReadStream();
@@ -142,7 +146,7 @@ module.exports = {
     });
 
     let params = {
-      Bucket: "collabo-files",
+      Bucket: "collabo-bucket",
       Key: id
     };
 

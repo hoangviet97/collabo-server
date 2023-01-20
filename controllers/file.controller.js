@@ -64,7 +64,7 @@ module.exports = {
     res.attachment("7ea8761c-6adf-4b10-833b-28448328e99f");
 
     s3.getObject({
-      Bucket: "collabo-files",
+      Bucket: "collabo-bucket",
       Key: req.params.id
     })
       .createReadStream()
